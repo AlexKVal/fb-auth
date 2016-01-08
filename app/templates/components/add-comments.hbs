@@ -1,1 +1,24 @@
-{{yield}}
+<h4>Comments:</h4>
+
+{{#each post.comments as |comment|}}
+  <div class="comments">
+    <img src="{{comment.user.avatar}}" alt="user's avatar" />
+    {{comment.body}}<br>
+    <a href="http://twitter.com/{{comment.user.username}}"
+        target="_blank"
+    >{{comment.user.username}}</a><br>
+  </div>
+{{else}}
+  <h4>No comments</h4>
+{{/each}}
+
+{{#if session.isAuthenticated}}
+  <div class="box">
+    <img src="{{session.currentUser.profileImageURL}}" alt="profile image"
+      height="70px" width="70px" />
+    <textarea rows="2" placeholder="Add new comment"
+      value={{body}}
+      onchange={{action (mut body) value='target.value'}} />
+    <button {{action 'submitComment' session body}}>Submit</button>
+  </div>
+{{/if}}
